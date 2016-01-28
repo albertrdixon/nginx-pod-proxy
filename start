@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "--> Remove unnecessary default.conf"
+rm -vf /etc/nginx/conf.d/default.conf
+if [ -n "$BASIC_AUTH_USER" ] && [ -n "$BASIC_AUTH_PASSWD" ]; then
+  echo "--> Adding basic auth credentials user=${BASIC_AUTH_USER} passwd=*******"
+  htpasswd -bdc /etc/nginx/auth.basic ${BASIC_AUTH_USER} ${BASIC_AUTH_PASSWD}
+fi
+exec nginx
